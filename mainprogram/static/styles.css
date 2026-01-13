@@ -1,0 +1,204 @@
+/* --- 變數定義：Steam 風格配色 --- */
+:root {
+    --bg-color: #1b2838;
+    --panel-color: #2a475e;
+    --card-color: #16202d;
+    --accent-color: #66c0f4;
+    --accent-hover: #8fd3ff;
+    --text-color: #c7d5e0;
+    --muted-text: #8f98a0;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* --- 全域設定 --- */
+body {
+    font-family: "Motiva Sans", Arial, sans-serif;
+    background: linear-gradient(to bottom, var(--bg-color), #0e141b);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 主容器 --- */
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* --- 標題 --- */
+h1 {
+    text-align: center;
+    font-size: 2.4rem;
+    margin-bottom: 25px;
+    color: var(--accent-color);
+    text-shadow: 0 2px 10px rgba(102, 192, 244, 0.3);
+}
+
+/* --- 錯誤提示 --- */
+.alert-error {
+    background: rgba(255, 80, 80, 0.15);
+    border: 1px solid rgba(255, 80, 80, 0.35);
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+}
+
+/* --- 搜尋面板（更鬆、間距更大） --- */
+.search-panel {
+    background: rgba(42, 71, 94, 0.35);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 8px 20px var(--shadow-color);
+    margin-bottom: 22px;
+}
+
+/* 欄位容器：拉大欄距/列距 */
+.search-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr auto;
+    gap: 20px 18px;
+    align-items: end;
+}
+
+/* 每個欄位群組：更整齊 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    color: var(--muted-text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--card-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: rgba(102, 192, 244, 0.55);
+    box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.15);
+}
+
+/* --- 按鈕（對齊 input 高度） --- */
+button[type="submit"] {
+    padding: 2px 12px 2px 12px;
+    border: none;
+    border-radius: 12px;
+    background: var(--accent-color);
+    color: #0e141b;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+
+    height: 44px;
+    align-self: end;
+}
+
+button[type="submit"]:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* --- 結果區 --- */
+.results-section {
+    background: rgba(22, 32, 45, 0.55);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.results-section h2 {
+    margin: 0 0 14px;
+    color: var(--text-color);
+    font-size: 1.35rem;
+}
+
+/* --- 表格 --- */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+thead {
+    background: rgba(102, 192, 244, 0.12);
+}
+
+th, td {
+    padding: 14px 14px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.98rem;
+}
+
+th {
+    text-align: left;
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+tr:hover td {
+    background: rgba(102, 192, 244, 0.06);
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+
+/* --- 遊戲名稱連結樣式（新增） --- */
+.game-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.game-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* --- 價格樣式 --- */
+.price-tag {
+    font-weight: 700;
+    color: #d6f5ff;
+}
+
+.badge-free {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(80, 220, 140, 0.15);
+    border: 1px solid rgba(80, 220, 140, 0.35);
+    color: #a8ffcf;
+    font-weight: 700;
+}
+
+/* --- RWD --- */
+@media (max-width: 900px) {
+    .search-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+    }
+}

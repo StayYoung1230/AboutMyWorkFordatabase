@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam 遊戲價格查詢系統</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Steam 遊戲價格小助手</h1>
+
+        {% if error_message %}
+            <div class="alert-error">
+                <strong>{{ error_message }}</strong>
+            </div>
+        {% endif %}
+
+        <div class="search-panel">
+            <form method="POST">
+                <div class="search-grid">
+
+                    <div class="form-group">
+                        <label for="name_keyword">遊戲名稱關鍵字</label>
+                        <input type="text" id="name_keyword" name="name_keyword" list="games"
+                               placeholder="例如: Elden Ring" value="{{ form.name_keyword }}">
+                        <datalist id="games">
+                            {% for game in games %}
+                                <option value="{{ game }}">{{ game }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tag_keyword">標籤(多個標籤請用逗號分隔)</label>
+                        <input type="text" id="tag_keyword" name="tag_keyword" list="tags"
+                               placeholder="例如: Action, RPG" value="{{ form.tag_keyword }}">
+                        <datalist id="tags">
+                            {% for tag in tags %}
+                                <option value="{{ tag }}">{{ tag }}</option>
+                            {% endfor %}
+                        </datalist>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_price">最低價格 (TWD)</label>
+                        <input type="number" id="min_price" name="min_price" placeholder="0"
+                               value="{{ form.min_price }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="max_price">最高價格 (TWD)</label>
+                        <input type="number" id="max_price" name="max_price" placeholder="預算上限"
+                               value="{{ form.max_price }}">
+                    </div>
+
+                    <button type="submit">搜尋</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="results-section">
+            <h2>搜尋結果</h2>
+
+            {% if results %}
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>遊戲名稱</th>
+                            <th class="text-right">價格</th>
+                            <th class="text-center">地區</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for game in results %}
+                        <tr>
+                            <td>
+                                <a class="game-link"
+                                   href="https://store.steampowered.com/app/{{ game.appid }}/_/"
+                                   target="_blank" rel="noopener noreferrer">
+                                    {{ game.title }}
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                {% if "免費" in game.price or "Free" in game.price %}
+                                    <span class="badge-free">{{ game.price }}</span>
+                                {% else %}
+                                    <span class="price-tag">{{ game.price }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ game.region }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% elif searched %}
+                <div style="text-align: center; color: #8f98a0; padding: 40px;">
+                    <p>沒有找到符合條件的遊戲，試試其他關鍵字或調整價格範圍。</p>
+                </div>
+            {% else %}
+                <div style="text-align: center; color: #8f98a0; padding: 40px;">
+                    <p>請在上方輸入關鍵字、標籤或價格範圍後按「搜尋」。</p>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>
